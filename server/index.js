@@ -5,6 +5,12 @@ const PORT = process.env.PORT || 8080
 const app = express()
 module.exports = app
 
+// logging middleware
+app.use(morgan('dev'))
+
+// body parsing middleware
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, '..', 'public')))
