@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
     "build-client-watch": "webpack -w",
-    "start-server": "nodemon server"
+    "start-server": "npx nodemon server"
   },
   "author": "",
   "license": "ISC",
