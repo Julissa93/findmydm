@@ -1,8 +1,8 @@
-const path = require('path')
-const express = require('express')
-const morgan = require('morgan')
+import path from 'path'
+import express, {Application, Request, Response, NextFunction} from 'express'
+import morgan from 'morgan'
 const PORT = process.env.PORT || 8080
-const app = express()
+const app: Application = express()
 module.exports = app
 
 // logging middleware
@@ -16,10 +16,10 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname, '..', 'public')))
 
 // any remaining requests with an extension (.js, .css, etc.) send 404
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
     if (path.extname(req.path).length) {
-      const err = new Error('Not found')
-      err.status = 404
+      const err: Error = new Error('Not found')
+      res.status(404)
       next(err)
     } else {
       next()
@@ -27,12 +27,12 @@ app.use((req, res, next) => {
 })
 
 // sends index.html
-app.use('*', (req, res) => {
+app.use('*', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '..', 'public/index.html'))
 })
 
 // error handling endware
-app.use((err, req, res, next) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     console.error(err)
     console.error(err.stack)
     res.status(err.status || 500).send(err.message || 'Internal server error.')
